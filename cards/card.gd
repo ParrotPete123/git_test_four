@@ -28,7 +28,7 @@ func _ready():
 	if can_be_flipped:
 		scale.x = 0
 		reset_tween()
-		tween.tween_property(self,"scale",Vector2(1,1),0.2)
+		tween.tween_property(self,"scale",Vector2(1,1),0.2).set_trans(Tween.TRANS_EXPO)
 
 func _physics_process(_delta: float) -> void:
 	if returning:
@@ -41,7 +41,11 @@ func initialize_card():
 	$cardDesc.text = chosen_card_data.description
 	if can_be_flipped:
 		chosen_card_data.copies += 1
-		Gv.owned_set_list[chosen_card_data.which_set].append(chosen_card_data)
+		if Gv.owned_set_list.has(chosen_card_data.card_name):
+			Gv.owned_set_list[chosen_card_data.card_name] += 1
+		else:
+			Gv.owned_set_list[chosen_card_data.card_name] = 1
+		SaveData.saveData()
 
 func reset_tween():
 	if tween:

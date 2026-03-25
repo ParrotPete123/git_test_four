@@ -1,8 +1,8 @@
-extends Node2D
+extends Control
 
 func _ready():
-	for n in Gv.owned_set_list:
-		for j in Gv.owned_set_list[n]:
-			var display = load("res://collection/control.tscn").instantiate()
-			display.preset_data = j
-			$ScrollContainer/VBoxContainer/GridContainer.add_child(display)
+	for card in Gv.owned_set_list:
+		var display = load("res://collection/control.tscn").instantiate()
+		display.card_name = card
+		display.amount = Gv.owned_set_list[card]
+		$ScrollContainer/VBoxContainer/GridContainer.add_child(display)

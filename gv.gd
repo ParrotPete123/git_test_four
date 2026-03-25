@@ -19,15 +19,27 @@ var card_list = {
 	"Legendary": [],
 }
 
+var nameToCard = {
+	
+}
+
+
 var set_list = {
 	"misfits": []
 }
 
 var owned_set_list = {
-	"misfits": []
 }
 
+## ALEX WHYYYY
+func fixAlexWarCrimes():
+	for rarity in card_list:
+		for card in card_list[rarity]:
+			nameToCard[card.card_name] = card
+	
 func _ready():
+	SaveData.loadData()
+	fixAlexWarCrimes()
 	for n in card_list:
 		for j in card_list[n]:
 			set_list[j.which_set].append(j)
