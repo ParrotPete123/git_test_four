@@ -1,14 +1,16 @@
-extends Node2D
+extends Control
 var which_card = 0
-var which_rarity: String
+var which_rarity: String = "Common"
 var tween: Tween
 var can_be_flipped: bool = false
 var sideways_velocity: Vector2
 var return_velocity: Vector2
 var returning: bool
+var chosen_card_data
 var card_pack_ref #only used when a card is pulled out of a pack
 
 func _ready():
+	position -= $Texture.size/2
 	if card_pack_ref:
 		card_pack_ref.finish_pack.connect(on_pack_finish)
 	if can_be_flipped:
@@ -35,10 +37,10 @@ func _physics_process(_delta: float) -> void:
 		return_card(_delta)
 
 func initialize_card():
-	var chosen_card_data = Gv.card_list[which_rarity][which_card]
-	$TextureRect.texture = chosen_card_data.texture
-	$cardTitle.text = "[center]" + chosen_card_data.card_name
-	$cardDesc.text = chosen_card_data.description
+	chosen_card_data = Gv.card_list[which_rarity][which_card]
+	$"2D/card/M/TextureRect".texture = chosen_card_data.texture
+	$"2D/card/cardTitle".text = "[center]" + chosen_card_data.card_name
+	$"2D/card/cardDesc".text = chosen_card_data.description
 	if can_be_flipped:
 		chosen_card_data.copies += 1
 		if Gv.owned_set_list.has(chosen_card_data.card_name):
